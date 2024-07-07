@@ -1,5 +1,6 @@
 #include "guessTheNumber.h"
 
+//make a guess the game between 0 and 99
 void guessTheNumber(int numberToGuessed) 
 {
     bool userGuessTheNumber;
