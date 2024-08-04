@@ -1,7 +1,7 @@
 # Compiler
 CC = gcc
 
-# Compiler flags
+# Compiler flags with -Wall we enable all warnings, including warnings that are disabled by default.
 CFLAGS = -Wall -Werror
 
 # Target executable
