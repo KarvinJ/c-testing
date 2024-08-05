@@ -8,6 +8,7 @@
 //  #include <math.h>
 #include "guessTheNumber.h"
 #include "basic.h"
+#include "Vector3.h"
 
 // Linking phase: Linking refers to the creation of a single executable file from multiple object files.
 // In this step, it is common that the linker will complain about undefined functions (commonly, main itself).
@@ -48,6 +49,14 @@ int main()
 #endif
 
 
+    Vector3 vectorA = {0.0f, 0.0f, 0.0f};
+    Vector3 vectorB = {1.0f, 2.0f, 3.0f};
+
+//Here I indicate that I'm accesing the add function in the Math namespace.
+    Vector3 result = Math::Vector::Add(vectorA, vectorB);
+
+    Math::Vector::Print(result);
+
     // basicOfC();
 
     // printf("declaration function %d\n", intFunctionDeclaration());
@@ -60,12 +69,12 @@ int main()
     // printf("modulo %d\n", test);
 
     // this only work for raw string, if I want it to use variables this concatenation won't work.
-    const char *stringConcatenation = "My "
-                                      "Name "
-                                      "is "
-                                      "Kevin\n";
+    // const char *stringConcatenation = "My "
+    //                                   "Name "
+    //                                   "is "
+    //                                   "Kevin\n";
 
-    printf("%s", stringConcatenation);
+    // printf("%s", stringConcatenation);
 
     // get a number between 0 and 99
     // srand(time(NULL));
