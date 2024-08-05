@@ -8,7 +8,7 @@ CFLAGS = -Wall -Werror
 TARGET = main
 
 # Source files
-SRCS = main.c math.c guessTheNumber.c basic.c
+SRCS = main.c math.c guessTheNumber.c basic.c Vector3.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)

@@ -68,8 +68,8 @@ int main()
     printf("%s", stringConcatenation);
 
     // get a number between 0 and 99
-    srand(time(NULL));
-    int numberToGuessed = rand() % 100;
+    // srand(time(NULL));
+    // int numberToGuessed = rand() % 100;
 
     // Reimplementation of my guess the number game with headers
     //  guessTheNumber(numberToGuessed);
