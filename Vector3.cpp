@@ -20,7 +20,7 @@ namespace Math
 
         void Print(Vector3 result)
         {
-            printf("X: %2.3f, Y: %2.3f, Z: %2.3f", result.x, result.y, result.z);
+            printf("X: %2.3f, Y: %2.3f, Z: %2.3f \n", result.x, result.y, result.z);
         }
     }
 }

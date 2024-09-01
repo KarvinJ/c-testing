@@ -33,6 +33,7 @@ int intFunctionDeclaration();
 
 void initializeVector(Vector3 *vectorToInitialize);
 void initializeVectorFail(Vector3 vectorToInitialize);
+void printArray(int *array, int arraySize);
 
 int main()
 {
@@ -91,6 +92,8 @@ int main()
 
     // now we are allocating memory on the heap, with a pointer we store the memory address
     // every time that we are going to allocate memory (using new) we need to use a pointer
+    // a int is 4 bytes typically in a 32 bits machine, so we are allocating 8 bytes in the heap
+    // in a 64 bit machine every time we use new int();
     int *pointer = new int();
 
     // we derenferece operator to add values to the address location of the pointer, with this 4 (hexadecimal value) will be store in the designated memory address
@@ -159,8 +162,6 @@ int main()
     // And finally we send the vector 3 values to print and check that everything is okay
     Math::Vector::Print(*vectorPointer);
 
-    printf("\n");
-
     // finally delete the vector pointer, always remember to delete the pointers to clean up our memory
     delete vectorPointer;
 
@@ -169,20 +170,71 @@ int main()
     // we need to send the reference (memory address) to the function that ask for a pointer
     initializeVector(&vectorToInitialize);
 
-    //sending the copy of the vector
-    // initializeVectorFail(vectorToInitialize);
+    // sending the copy of the vector
+    //  initializeVectorFail(vectorToInitialize);
 
     printf("initialize vector values: \n");
 
     Math::Vector::Print(vectorToInitialize);
 
-    Vector3* vectorA = new Vector3();
-    Vector3* vectorTmp = vectorA;
+    // the total value in memory of any struct it depends of their members. In this case vector 3 has 3 float (4 bytes each one)
+    //  so every time that I'm doing a new Vector3() I'm allocating 12 bytes in the heap
+    Vector3 *vectorA = new Vector3();
+    Vector3 *vectorTmp = vectorA;
 
     delete vectorA;
-    //In this case we don't need to delete vectorTmp, because we only allocate memory (use new) for vectorA
-    // and in vectorTmp we are only assigning  that value
-    // delete vectorTmp;
+    // In this case we don't need to delete vectorTmp, because we only allocate memory (use new) for vectorA
+    //  and in vectorTmp we are only assigning  that value
+    //  delete vectorTmp;
+
+    printf("initialize vector values: \n");
+
+    // Note: everything is a block of memory whether in the stack or the heap
+
+    // to know the size in byte or any dataType
+    printf("this datatype has a size of: %d bytes\n", sizeof(Vector3));
+
+    // allocating memory for vector array with this I'm allocating 12*10 (120) bytes in the heap
+    Vector3 *vectorArray = new Vector3[10];
+
+    for (int i = 0; i < 10; i++)
+    {
+        vectorArray[i].x = i;
+        // This do the same thing that the upper expression do, people prefer the upper version for obvious reasons.
+        (*(vectorArray + i)).y = i + 1;
+
+        vectorArray[i].z = i;
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        Math::Vector::Print(vectorArray[i]);
+    }
+
+    // to delete the allocated memory of an array we need to do it like this
+    delete[] vectorArray;
+
+    // int *array = new int[10];
+    int array[10];
+
+    for (int i = 0; i < 10; i++)
+    {
+        array[i] = i;
+    }
+
+    //as we can se, we can do the same operations with the stack array and the heap allocated array.
+    // c++ treats the stack allocated array implicit as a pointer
+    printArray(array, 10);
+}
+
+// the arrays are pointers whether I use new for heap allocation or just stack allocation.
+// if we are going to use an array in a function we need to indicate the param as a pointer
+void printArray(int *array, int arraySize)
+{
+    for (int i = 0; i < arraySize; i++)
+    {
+        printf("value: %d \n", array[i]);
+    }
 }
 
 // If we want to initialize the values of a vector 3 without returning, we need to use pointers.
@@ -194,7 +246,7 @@ void initializeVector(Vector3 *vectorToInitialize)
     vectorToInitialize->z = 10;
 }
 
-// if we try to this the initialization will always fail, because we this method receive a copy of this vector, 
+// if we try to this the initialization will always fail, because we this method receive a copy of this vector,
 // so with only change the copy and no the original
 void initializeVectorFail(Vector3 vectorToInitialize)
 {
