@@ -31,6 +31,8 @@ int intFunctionDeclaration();
 // If we want to undefine a previous define value.
 // #undef WINDOWS
 
+void initializeVector(Vector3 vectorToInitialize);
+
 int main()
 {
 
@@ -86,10 +88,11 @@ int main()
 
     // pointers
 
-    // now we are allocating memory on the heap, we a pointer we store the memory address
-    int* pointer = new int();
+    // now we are allocating memory on the heap, with a pointer we store the memory address
+    // every time that we are going to allocate memory (using new) we need to use a pointer
+    int *pointer = new int();
 
-    // we derenferece operator to add values to the address location of the pointer
+    // we derenferece operator to add values to the address location of the pointer, with this 4 (hexadecimal value) will be store in the designated memory address
     *pointer = 4;
 
     int *pointer2 = new int();
@@ -98,8 +101,85 @@ int main()
     printf("Pointer 1: %d \n", *pointer);
     printf("Pointer 2: %d \n", *pointer2);
 
+    // swapping pointer, we this we change between pointer the memory address that they are pointing
+    //  doing this we are also changing the values.
+    int *tmpPointer = pointer;
+    pointer = pointer2;
+    pointer2 = tmpPointer;
+
+    // assing another value
+    //  *pointer2 = 1;
+
+    printf("Pointer 1: %d \n", *pointer);
+    printf("Pointer 2: %d \n", *pointer2);
+
     // every time you do a new, you must do a delete, keep in mind that you dont really need to free memory if you are about to end the application
+    // because the OS will do the cleaning faster.
     delete pointer;
+    delete pointer2;
+
+    int a = 10;
+
+    // if we want to point to the same address in memory of  variable a we need
+    //   to do this
+
+    // with &a we are having access to the address of the a variable and we are storing the address in the pointer aPointer
+    int *aPointer = &a;
+
+    printf("a variable value: %d \n", a);
+
+    // we a pointer to a variable we can change the variable value, without chaging the variable
+    // since aPointer is pointing to the reference of the variable a,
+    // we can change the value of the variable a
+    *aPointer = 50;
+
+    printf("a variable value: %d \n", a);
+
+    // we *aPointer we have access to the value, but if we use aPointer, we'll have access to the memory address.
+    printf("aPointer value: %d \n", *aPointer);
+    printf("aPointer address: %p \n", aPointer);
+
+    // delete aPointer;
+    // doing pointer with vector3
+
+    Vector3 *vectorPointer = new Vector3();
+
+    // to have access to the members of pointer struct or classes there are 2 ways.
+    // we only use these methos for struct and classes since there are the only things
+    //  in the languages with the capability of having members
+
+    // 1: dereferencing the pointer, but most people avoid this way
+    //  (*vectorPointer).x = 10;
+
+    // 2: the second way is the more common, this method is called pointer to member operator
+    vectorPointer->x = 10;
+    vectorPointer->y = 15;
+    vectorPointer->z = 25.4f;
+
+    // And finally we send the vector 3 values to print and check that everything is okay
+    Math::Vector::Print(*vectorPointer);
+
+    printf("\n");
+
+    // finally delete the vector pointer, always remember to delete the pointers to clean up our memory
+    delete vectorPointer;
+
+    // In conclusion I'll normally want to use pointers when I want to allocate memory in the heap
+
+    Vector3 vectorToInitialize;
+
+    initializeVector(vectorToInitialize);
+
+    printf("initialize vector values: \n");
+
+    Math::Vector::Print(vectorToInitialize);
+}
+
+void initializeVector(Vector3 vectorToInitialize)
+{
+    vectorToInitialize.x = 10;
+    vectorToInitialize.y = 15;
+    vectorToInitialize.z = 25.4f;
 }
 
 int intFunctionDeclaration()
