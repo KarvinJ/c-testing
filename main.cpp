@@ -98,7 +98,7 @@ int main()
     printf("Pointer 1: %d \n", *pointer);
     printf("Pointer 2: %d \n", *pointer2);
 
-    // every time you do a new, you must do a delete
+    // every time you do a new, you must do a delete, keep in mind that you dont really need to free memory if you are about to end the application
     delete pointer;
 }
 
