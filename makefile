@@ -1,5 +1,5 @@
 # Compiler
-CC = gcc
+CC = g++
 
 # Compiler flags with -Wall we enable all warnings, including warnings that are disabled by default.
 CFLAGS = -Wall -Werror

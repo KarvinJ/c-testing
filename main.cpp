@@ -34,28 +34,27 @@ int intFunctionDeclaration();
 int main()
 {
 
-    // Check if windows is define or not and print the code depending of that. 
+    // Check if windows is define or not and print the code depending of that.
 // #ifdef WINDOWS
 //     printf("On Windows \n");
 // #else
 //     printf("Not On Windows \n");
 // #endif
 
-//Also we can check if I define value is true or not, most of the time we should prefer this preprocessor checking
+// Also we can check if I define value is true or not, most of the time we should prefer this preprocessor checking
 #if WINDOWS
     printf("On Windows \n");
 #else
     printf("Not On Windows \n");
 #endif
 
+    // Vector3 vectorA = {0.0f, 0.0f, 0.0f};
+    // Vector3 vectorB = {1.0f, 2.0f, 3.0f};
 
-    Vector3 vectorA = {0.0f, 0.0f, 0.0f};
-    Vector3 vectorB = {1.0f, 2.0f, 3.0f};
+    // Here I indicate that I'm accesing the add function in the Math namespace.
+    // Vector3 result = Math::Vector::Add(vectorA, vectorB);
 
-//Here I indicate that I'm accesing the add function in the Math namespace.
-    Vector3 result = Math::Vector::Add(vectorA, vectorB);
-
-    Math::Vector::Print(result);
+    // Math::Vector::Print(result);
 
     // basicOfC();
 
@@ -84,6 +83,23 @@ int main()
     //  guessTheNumber(numberToGuessed);
 
     // in c++ there is no need to add the return 0
+
+    // pointers
+
+    // now we are allocating memory on the heap, we a pointer we store the memory address
+    int* pointer = new int();
+
+    // we derenferece operator to add values to the address location of the pointer
+    *pointer = 4;
+
+    int *pointer2 = new int();
+    *pointer2 = 10;
+
+    printf("Pointer 1: %d \n", *pointer);
+    printf("Pointer 2: %d \n", *pointer2);
+
+    // every time you do a new, you must do a delete
+    delete pointer;
 }
 
 int intFunctionDeclaration()
