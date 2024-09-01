@@ -140,7 +140,6 @@ int main()
     printf("aPointer value: %d \n", *aPointer);
     printf("aPointer address: %p \n", aPointer);
 
-    // delete aPointer;
     // doing pointer with vector3
 
     Vector3 *vectorPointer = new Vector3();
@@ -176,6 +175,14 @@ int main()
     printf("initialize vector values: \n");
 
     Math::Vector::Print(vectorToInitialize);
+
+    Vector3* vectorA = new Vector3();
+    Vector3* vectorTmp = vectorA;
+
+    delete vectorA;
+    //In this case we don't need to delete vectorTmp, because we only allocate memory (use new) for vectorA
+    // and in vectorTmp we are only assigning  that value
+    // delete vectorTmp;
 }
 
 // If we want to initialize the values of a vector 3 without returning, we need to use pointers.
