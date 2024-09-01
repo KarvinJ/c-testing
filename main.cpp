@@ -31,7 +31,8 @@ int intFunctionDeclaration();
 // If we want to undefine a previous define value.
 // #undef WINDOWS
 
-void initializeVector(Vector3 vectorToInitialize);
+void initializeVector(Vector3 *vectorToInitialize);
+void initializeVectorFail(Vector3 vectorToInitialize);
 
 int main()
 {
@@ -164,22 +165,35 @@ int main()
     // finally delete the vector pointer, always remember to delete the pointers to clean up our memory
     delete vectorPointer;
 
-    // In conclusion I'll normally want to use pointers when I want to allocate memory in the heap
-
     Vector3 vectorToInitialize;
 
-    initializeVector(vectorToInitialize);
+    // we need to send the reference (memory address) to the function that ask for a pointer
+    initializeVector(&vectorToInitialize);
+
+    //sending the copy of the vector
+    // initializeVectorFail(vectorToInitialize);
 
     printf("initialize vector values: \n");
 
     Math::Vector::Print(vectorToInitialize);
 }
 
-void initializeVector(Vector3 vectorToInitialize)
+// If we want to initialize the values of a vector 3 without returning, we need to use pointers.
+// we define a pointer in the function param, and in the call we send the reference.
+void initializeVector(Vector3 *vectorToInitialize)
+{
+    vectorToInitialize->x = 10;
+    vectorToInitialize->y = 10;
+    vectorToInitialize->z = 10;
+}
+
+// if we try to this the initialization will always fail, because we this method receive a copy of this vector, 
+// so with only change the copy and no the original
+void initializeVectorFail(Vector3 vectorToInitialize)
 {
     vectorToInitialize.x = 10;
-    vectorToInitialize.y = 15;
-    vectorToInitialize.z = 25.4f;
+    vectorToInitialize.y = 10;
+    vectorToInitialize.z = 10;
 }
 
 int intFunctionDeclaration()
