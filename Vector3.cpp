@@ -4,6 +4,16 @@ namespace Math
 {
     namespace Vector
     {
+        // about static keywords, never use static in header files
+        // we can use static keywords in cpp files to define a variable
+        //  that will only be visible to this cpp file, this is pretty similar to private in oop
+        static int staticVariable = 10;
+
+        // we can do the same with methods
+        static void StaticFunction() 
+        {
+        }
+
         Vector3 Add(Vector3 &vectorA, Vector3 &vectorB)
         {
             // In oop if we want to create a new object will normally use new, but here works different from java

@@ -36,6 +36,15 @@ void initializeVectorFail(Vector3 vectorToInitialize);
 void initializeVectorByReference(Vector3 &vectorToInitialize);
 void printArray(int *array, int arraySize);
 
+int getUID()
+{
+    // this static variable will initialize the first time that we call this function
+    // but the next time it won't initialize again, it will go +1 every time we call this function
+    // this is a good method to generate uid
+    static int uid = 0;
+    return uid++;
+}
+
 int main()
 {
 
@@ -236,6 +245,17 @@ int main()
 
     // passing by reference is almost the same as passing by pointer, but is easier.
     // Passing by reference instead of pointer, give us the advantage that we cannot pass a null pointer to a reference
+
+    // we can't access the static function from main. In conclusion static function in cpp
+    // files is pretty similar to make a function private in oop
+    // Math::Vector::StaticFunction
+
+    // this will print 0,1,2,3,4,5.
+    printf("uid: %d \n", getUID());
+    printf("uid: %d \n", getUID());
+    printf("uid: %d \n", getUID());
+    printf("uid: %d \n", getUID());
+    printf("uid: %d \n", getUID());
 }
 
 // the arrays are pointers whether I use new for heap allocation or just stack allocation.
