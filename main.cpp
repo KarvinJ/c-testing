@@ -33,6 +33,7 @@ int intFunctionDeclaration();
 
 void initializeVector(Vector3 *vectorToInitialize);
 void initializeVectorFail(Vector3 vectorToInitialize);
+void initializeVectorByReference(Vector3 &vectorToInitialize);
 void printArray(int *array, int arraySize);
 
 int main()
@@ -177,6 +178,15 @@ int main()
 
     Math::Vector::Print(vectorToInitialize);
 
+    Vector3 vectorToInitializeByReference;
+
+    // its simple to initialize vectors by reference
+    initializeVectorByReference(vectorToInitializeByReference);
+
+    printf("initialize vector values by refence: \n");
+
+    Math::Vector::Print(vectorToInitializeByReference);
+
     // the total value in memory of any struct it depends of their members. In this case vector 3 has 3 float (4 bytes each one)
     //  so every time that I'm doing a new Vector3() I'm allocating 12 bytes in the heap
     Vector3 *vectorA = new Vector3();
@@ -220,8 +230,8 @@ int main()
         array[i] = i;
     }
 
-    //as we can se, we can do the same operations with the stack array and the heap allocated array.
-    // c++ treats the stack allocated array implicit as a pointer
+    // as we can se, we can do the same operations with the stack array and the heap allocated array.
+    //  c++ treats the stack allocated array implicit as a pointer
     printArray(array, 10);
 
     // passing by reference is almost the same as passing by pointer, but is easier.
@@ -256,6 +266,18 @@ void initializeVectorFail(Vector3 vectorToInitialize)
     vectorToInitialize.x = 10;
     vectorToInitialize.y = 10;
     vectorToInitialize.z = 10;
+}
+
+// initializing vectors by reference
+// With struct and objects we should always prioritize pass by reference,
+// to avoid copying and with that create new objects and memory, we references & we save memory
+// With simple datatypes most of the time we can pass by value, we just need to be wary when we are working
+// with objects (structs and class objects)
+void initializeVectorByReference(Vector3 &vectorToInitialize)
+{
+    vectorToInitialize.x = 20;
+    vectorToInitialize.y = 20;
+    vectorToInitialize.z = 20;
 }
 
 int intFunctionDeclaration()
