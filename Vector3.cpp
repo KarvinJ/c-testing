@@ -4,7 +4,7 @@ namespace Math
 {
     namespace Vector
     {
-        Vector3 Add(Vector3 vectorA, Vector3 vectorB)
+        Vector3 Add(Vector3 &vectorA, Vector3 &vectorB)
         {
             // In oop if we want to create a new object will normally use new, but here works different from java
             // the new operator allocate memory on the heap which is unmmanaged memory,
@@ -18,7 +18,7 @@ namespace Math
             return result;
         }
 
-        void Print(Vector3 result)
+        void Print(Vector3& result)
         {
             printf("X: %2.3f, Y: %2.3f, Z: %2.3f \n", result.x, result.y, result.z);
         }

@@ -187,8 +187,6 @@ int main()
     //  and in vectorTmp we are only assigning  that value
     //  delete vectorTmp;
 
-    printf("initialize vector values: \n");
-
     // Note: everything is a block of memory whether in the stack or the heap
 
     // to know the size in byte or any dataType
@@ -225,6 +223,9 @@ int main()
     //as we can se, we can do the same operations with the stack array and the heap allocated array.
     // c++ treats the stack allocated array implicit as a pointer
     printArray(array, 10);
+
+    // passing by reference is almost the same as passing by pointer, but is easier.
+    // Passing by reference instead of pointer, give us the advantage that we cannot pass a null pointer to a reference
 }
 
 // the arrays are pointers whether I use new for heap allocation or just stack allocation.
@@ -239,6 +240,8 @@ void printArray(int *array, int arraySize)
 
 // If we want to initialize the values of a vector 3 without returning, we need to use pointers.
 // we define a pointer in the function param, and in the call we send the reference.
+// we can simplify this just by asking for the reference in the function (Vector3 &vectorToInitialize)
+// but I'm going to leave this as a example.
 void initializeVector(Vector3 *vectorToInitialize)
 {
     vectorToInitialize->x = 10;
