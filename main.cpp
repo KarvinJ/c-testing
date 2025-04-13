@@ -9,6 +9,8 @@
 #include "guessTheNumber.h"
 #include "basic.h"
 #include "Vector3.h"
+#include <thread>
+#include <iostream>
 
 // Linking phase: Linking refers to the creation of a single executable file from multiple object files.
 // In this step, it is common that the linker will complain about undefined functions (commonly, main itself).
@@ -43,6 +45,16 @@ int getUID()
     // this is a good method to generate uid
     static int uid = 0;
     return uid++;
+}
+
+// Function to be executed by the new thread
+void threadFunction()
+{
+    for (int i = 0; i < 150000; i++)
+    {
+        std::cout << "new thread: ";
+        std::cout << i << std::endl;
+    }
 }
 
 int main()
@@ -112,8 +124,8 @@ int main()
     int *pointer2 = new int();
     *pointer2 = 10;
 
-    printf("Pointer 1: %d \n", *pointer);
-    printf("Pointer 2: %d \n", *pointer2);
+    // printf("Pointer 1: %d \n", *pointer);
+    // printf("Pointer 2: %d \n", *pointer2);
 
     // swapping pointer, we this we change between pointer the memory address that they are pointing
     //  doing this we are also changing the values.
@@ -124,8 +136,8 @@ int main()
     // assing another value
     //  *pointer2 = 1;
 
-    printf("Pointer 1: %d \n", *pointer);
-    printf("Pointer 2: %d \n", *pointer2);
+    // printf("Pointer 1: %d \n", *pointer);
+    // printf("Pointer 2: %d \n", *pointer2);
 
     // every time you do a new, you must do a delete, keep in mind that you dont really need to free memory if you are about to end the application
     // because the OS will do the cleaning faster.
@@ -140,18 +152,18 @@ int main()
     // with &a we are having access to the address of the a variable and we are storing the address in the pointer aPointer
     int *aPointer = &a;
 
-    printf("a variable value: %d \n", a);
+    // printf("a variable value: %d \n", a);
 
     // we a pointer to a variable we can change the variable value, without chaging the variable
     // since aPointer is pointing to the reference of the variable a,
     // we can change the value of the variable a
     *aPointer = 50;
 
-    printf("a variable value: %d \n", a);
+    // printf("a variable value: %d \n", a);
 
     // we *aPointer we have access to the value, but if we use aPointer, we'll have access to the memory address.
-    printf("aPointer value: %d \n", *aPointer);
-    printf("aPointer address: %p \n", aPointer);
+    // printf("aPointer value: %d \n", *aPointer);
+    // printf("aPointer address: %p \n", aPointer);
 
     // doing pointer with vector3
 
@@ -170,7 +182,7 @@ int main()
     vectorPointer->z = 25.4f;
 
     // And finally we send the vector 3 values to print and check that everything is okay
-    Math::Vector::Print(*vectorPointer);
+    // Math::Vector::Print(*vectorPointer);
 
     // finally delete the vector pointer, always remember to delete the pointers to clean up our memory
     delete vectorPointer;
@@ -183,18 +195,18 @@ int main()
     // sending the copy of the vector
     //  initializeVectorFail(vectorToInitialize);
 
-    printf("initialize vector values: \n");
+    // printf("initialize vector values: \n");
 
-    Math::Vector::Print(vectorToInitialize);
+    // Math::Vector::Print(vectorToInitialize);
 
     Vector3 vectorToInitializeByReference;
 
     // its simple to initialize vectors by reference
     initializeVectorByReference(vectorToInitializeByReference);
 
-    printf("initialize vector values by refence: \n");
+    // printf("initialize vector values by refence: \n");
 
-    Math::Vector::Print(vectorToInitializeByReference);
+    // Math::Vector::Print(vectorToInitializeByReference);
 
     // the total value in memory of any struct it depends of their members. In this case vector 3 has 3 float (4 bytes each one)
     //  so every time that I'm doing a new Vector3() I'm allocating 12 bytes in the heap
@@ -209,7 +221,7 @@ int main()
     // Note: everything is a block of memory whether in the stack or the heap
 
     // to know the size in byte or any dataType
-    printf("this datatype has a size of: %d bytes\n", sizeof(Vector3));
+    // printf("this datatype has a size of: %d bytes\n", sizeof(Vector3));
 
     // allocating memory for vector array with this I'm allocating 12*10 (120) bytes in the heap
     Vector3 *vectorArray = new Vector3[10];
@@ -223,10 +235,35 @@ int main()
         vectorArray[i].z = i;
     }
 
-    for (int i = 0; i < 10; i++)
+    //
+    const clock_t begin_time = clock();
+
+    // Create a new thread that calls myFunction,
+    //This thread will be executing this function, and will not lock the main thread.
+    std::thread newThread(threadFunction);
+
+    // for (int i = 0; i < 150000; i++)
+    // {
+    //     std::cout << "main thread: ";
+    //     std::cout << i << std::endl;
+    // }
+
+    for (int i = 0; i < 100000; i++)
     {
-        Math::Vector::Print(vectorArray[i]);
+        std::cout << "main thread: ";
+        std::cout << i << std::endl;
     }
+
+    // Wait for the new thread to finish execution, and not finish the program, before the thread has finish..
+    newThread.join();
+
+    //calculating time between code execution.
+    std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC;
+
+    // for (int i = 0; i < 10; i++)
+    // {
+    // Math::Vector::Print(vectorArray[i]);
+    // }
 
     // to delete the allocated memory of an array we need to do it like this
     delete[] vectorArray;
@@ -241,7 +278,7 @@ int main()
 
     // as we can se, we can do the same operations with the stack array and the heap allocated array.
     //  c++ treats the stack allocated array implicit as a pointer
-    printArray(array, 10);
+    // printArray(array, 10);
 
     // passing by reference is almost the same as passing by pointer, but is easier.
     // Passing by reference instead of pointer, give us the advantage that we cannot pass a null pointer to a reference
@@ -251,11 +288,11 @@ int main()
     // Math::Vector::StaticFunction
 
     // this will print 0,1,2,3,4,5.
-    printf("uid: %d \n", getUID());
-    printf("uid: %d \n", getUID());
-    printf("uid: %d \n", getUID());
-    printf("uid: %d \n", getUID());
-    printf("uid: %d \n", getUID());
+    // printf("uid: %d \n", getUID());
+    // printf("uid: %d \n", getUID());
+    // printf("uid: %d \n", getUID());
+    // printf("uid: %d \n", getUID());
+    // printf("uid: %d \n", getUID());
 }
 
 // the arrays are pointers whether I use new for heap allocation or just stack allocation.
