@@ -11,6 +11,7 @@
 #include "Vector3.h"
 #include <thread>
 #include <iostream>
+#include <functional> // for using std::ref and send variables by reference to threads functions.
 
 // Linking phase: Linking refers to the creation of a single executable file from multiple object files.
 // In this step, it is common that the linker will complain about undefined functions (commonly, main itself).
@@ -30,6 +31,8 @@ int intFunctionDeclaration();
 
 #define WINDOWS 1
 
+const int THREAD_TEST = 1000000000;
+
 // If we want to undefine a previous define value.
 // #undef WINDOWS
 
@@ -47,13 +50,50 @@ int getUID()
     return uid++;
 }
 
-// Function to be executed by the new thread
-void threadFunction()
+// Function to be executed by the new thread, I just put the parameter to test sending parameters to a function in a thread.
+void threadFunction(int &threadCounter)
 {
-    for (int i = 0; i < 150000; i++)
+    // getting the thread Id
+    // std::thread::id threadId = std::this_thread::get_id();
+
+    for (int i = 0; i < THREAD_TEST; i++)
     {
-        std::cout << "new thread: ";
-        std::cout << i << std::endl;
+        
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+        
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+        
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+        
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+       
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+        
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+
+    }
+
+    for (int i = 0; i < THREAD_TEST; i++)
+    {
+        threadCounter++;
     }
 }
 
@@ -239,25 +279,32 @@ int main()
     const clock_t begin_time = clock();
 
     // Create a new thread that calls myFunction,
-    //This thread will be executing this function, and will not lock the main thread.
-    std::thread newThread(threadFunction);
+    // This thread will be executing this function, and will not lock the main thread.
+    // To create a new thread I put the function that I will be using and the parameters of the functions if needed separate by ,
+    // if no needed just put the function name and thats it.
 
-    // for (int i = 0; i < 150000; i++)
-    // {
-    //     std::cout << "main thread: ";
-    //     std::cout << i << std::endl;
-    // }
+    int threadCounter = 0;
 
-    for (int i = 0; i < 100000; i++)
-    {
-        std::cout << "main thread: ";
-        std::cout << i << std::endl;
-    }
+    // std::ref(threadCounter) I can send variables as a reference to a thread function.
+    std::thread newThread(threadFunction, std::ref(threadCounter));
+    // std::thread secondThread(threadFunction, 2);
+
+    // notes: The main thread is always faster than any extra thread open. Is always more optimize this for loop running in the main thread
+    // vs divide the number between various thread, So I shouldn't use threads for this kind of operations.
+
+    // The best use case for thread is went you are making a huge calculation that takes extra time. With a thread you could just make
+    //those calculation in a background thread, while the program is doing something else like showing a load bar or asking the users, for their names
+    // threadFunction(threadCounter); // If i call the function directly the user will need to wait 2 seconds before putting the info.
+    
+    basicOfC();
 
     // Wait for the new thread to finish execution, and not finish the program, before the thread has finish..
-    newThread.join();
+    newThread.join(); // but if I call the thread function, the user won't have to wait, and the thread will keep calculating the number in the background.
+    // secondThread.join();
 
-    //calculating time between code execution.
+    printf("thread number is %d\n", threadCounter);
+
+    // calculating time between code execution.
     std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC;
 
     // for (int i = 0; i < 10; i++)
