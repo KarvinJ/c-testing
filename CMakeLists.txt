@@ -12,7 +12,8 @@ file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_executable(c-testing ${SRC_FILES})
 
 target_include_directories(c-testing PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include) #With this we indicate the directory
-#where the headers files are, this is an extra, because I like to put my header files in the same directory of my source files this means src.
+#where the headers files are, this is an extra, because I like to put my header files in the same directory of my source
+#files this means src and when I do this there is not need for this line, but I guess its good to know.
 
 #To run a cmake project do mkdir build, cd build, cmake .. and finally make, and after that every time I make a change
 #in the code I just need to use make in the build file to generate a new executable.
