@@ -1,4 +1,6 @@
-#include "basic.h"
+// #include "../include/basic.h" We need to indicate the specific path of our header files, unless we define the path in the cmakefile
+#include "basic.h" // Since I have already define the path to my header files I can include just like this.
+#include <stdio.h>
 
 void basicOfC()
 {

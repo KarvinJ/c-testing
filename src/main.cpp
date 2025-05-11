@@ -7,7 +7,7 @@
 // Since I can use both ways
 //  #include <math.h>
 #include "guessTheNumber.h"
-#include "basic.h"
+#include "../include/basic.h"
 #include "Vector3.h"
 #include <thread>
 #include <iostream>
